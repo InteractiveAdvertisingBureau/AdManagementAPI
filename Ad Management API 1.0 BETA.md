@@ -81,7 +81,7 @@ Jennifer Derke, Director of Product, Programmatic & Data, IAB Tech Lab
     - [Bidder Ad Submission](#bidderadsubmission1)
     - [Bidder Receives A Webhook Call From Exchange](#bidderreceivesawebhookcallfromexchange1)
     - [Bidder Polls For Updates](#bidderpollsforupdates1)
-   - [Typical Implementation](#typicalimplementation)
+  - [Typical Implementation](#typicalimplementation)
     - [Bidder Ad Submission](#bidderadsubmission2)
     - [Bidder Polls For Updates](#bidderpollsforupdates2)
 - [Appendix C: Resources](#appendixc_resources)
