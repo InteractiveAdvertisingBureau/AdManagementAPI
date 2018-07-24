@@ -264,7 +264,7 @@ For example:  <br />
 
 `/ads?auditStart=2018-06-05T17:51:54Z`
 
-<br />
+
 <strong>POST:</strong> submits a single ad. The body must contain a only an Ad object (and its children). Returns a collection of ads containing the ad submitted, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions").</td>
   </tr>
   <tr>
