@@ -240,16 +240,16 @@ Per "API Conventions" above, breaking changes require the major version number t
   <tr>
     <td>{baseUrl}/bidder/{bidderId}/webhook</td>
     <td>GET, PUT, PATCH</td>
-    <td>**GET:** returns the webhook registration object for a given bidder. <br />
-**PUT**: replaces the webhook registration object for a given bidder. <br />
-**PATCH:** replaces only the specified fields in the webhook registration object for a given bidder. <br />
+    <td><strong>GET:</strong> returns the webhook registration object for a given bidder. <br />
+<strong>PUT:</strong> replaces the webhook registration object for a given bidder. <br />
+<strong>PATCH:</strong> replaces only the specified fields in the webhook registration object for a given bidder. <br />
 
 No POST method is supplied as only a single  webhook registration object may exist.</td>
   </tr>
   <tr>
     <td>{baseUrl}/bidder/{bidderId}/ads</td>
     <td>GET, POST</td>
-    <td>**GET:** returns a collection of ads for a given bidder. This response may be sparse at the exchange's discretion (see "API conventions"). <br />
+    <td><strong>GET:</strong> returns a collection of ads for a given bidder. This response may be sparse at the exchange's discretion (see "API conventions"). <br />
 
 An "auditStart" filter, at a minimum, must be set on the query string to constrain the number of ads returned, else exchanges may choose to return a 400 status code. Exchanges may limit the number of ads in the returned collection at their discretion. If the result set is a subset of available ads, this will be indicated in the result (see "Collection of ads"). Bidders may fetch the remaining ads by examining the last modification date of the Audit object of the final ad in the collection (the most recently updated ad) and use this as the "auditStart" filter for a subsequent request, repeating until the bidder has gathered all updates. <br />
 
@@ -263,15 +263,16 @@ See "API conventions" regarding date format. <br />
 For example:  <br />
 
 `/ads?auditStart=2018-06-05T17:51:54Z`
+
 <br />
-**POST:** submits a single ad. The body must contain a only an Ad object (and its children). Returns a collection of ads containing the ad submitted, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions").</td>
+<strong>POST:</strong> submits a single ad. The body must contain a only an Ad object (and its children). Returns a collection of ads containing the ad submitted, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions").</td>
   </tr>
   <tr>
     <td>{baseUrl}/bidder/{bidderId}/ads/{id}</td>
     <td>GET, PUT, PATCH</td>
-    <td>**GET:** Returns a collection of ads resource containing a single ad in its entirety. <br />
-**PUT:** replaces the ad object in its' entirety, and returns a collection of ads containing the specified ad, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions"). <br />
-**PATCH:** replaces only the specified fields, and returns a collection of ads containing the specified ad, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions").</td>
+    <td><strong>GET:</strong> Returns a collection of ads resource containing a single ad in its entirety. <br />
+<strong>PUT:</strong> replaces the ad object in its' entirety, and returns a collection of ads containing the specified ad, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions"). <br />
+<strong>PATCH:</strong> replaces only the specified fields, and returns a collection of ads containing the specified ad, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions").</td>
   </tr>
 </table>
 
