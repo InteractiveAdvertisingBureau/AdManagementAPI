@@ -98,7 +98,7 @@ Wherever possible, this specification makes reference to OpenRTB as it is assume
 
 ## Dependencies <a name="dependencies"></a>
 
-This specification makes use of AdCOM (FIXME: Hyperlink) 1.x for the definition of the Ad object and its children. 
+This specification makes use of [AdCOM 1.x](https://github.com/InteractiveAdvertisingBureau/AdCOM) for the definition of the Ad object and its children. 
 
 This specification is not inherently constrained to partners who use OpenRTB during bidding. In fact, this specification is also suitable for management of ads used in non-biddable transactions as well. **While this specification is released as a part of the OpenRTB 3.0 framework, implementation of OpenRTB 3.0 is not required to use this specification.** It can easily be used alongside OpenRTB 2.x bidding implementations.
 
@@ -346,7 +346,7 @@ A collection of ads is an object containing one or more ads with additional meta
 
 ## Ad <a name="ad"></a>
 
-An ad resource is an object representing each unique ad that will be used by the bidder. It is a AdCOM 1.x ad object with relevant child objects. See the AdCOM specification (FIXME: Hyperlink) for details.
+An ad resource is an object representing each unique ad that will be used by the bidder. It is a AdCOM 1.x ad object with relevant child objects. See the [AdCOM specification](https://github.com/InteractiveAdvertisingBureau/AdCOM) for details.
 
 Only the bidder may modify the ad object and its' children, excepting the Audit object and these fields from the Ad object:
 
@@ -358,7 +358,7 @@ Only the bidder may modify the ad object and its' children, excepting the Audit 
 
 ## Audit <a name="audit"></a>
 
-Subordinate to the Ad object is a AdCOM 1.x audit object. See the AdCOM specification (FIXME:Hyperlink) for details. Among the many objects that may be present subordinate to the Ad object, it is specifically noted in this specification because its behaviour in the context of ad management is worth elaborating on.
+Subordinate to the Ad object is a AdCOM 1.x audit object. See the [AdCOM specification](https://github.com/InteractiveAdvertisingBureau/AdCOM) for details. Among the many objects that may be present subordinate to the Ad object, it is specifically noted in this specification because its behaviour in the context of ad management is worth elaborating on.
 
 Only the exchange may modify the audit object. Upon initial ad upload, the exchange must initialize the "init" and "lastmod" field to the date/time of the submission of the ad. The "lastmod" field must be updated at any change of this object.
 
