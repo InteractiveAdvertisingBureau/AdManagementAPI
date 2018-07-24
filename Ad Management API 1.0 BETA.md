@@ -578,8 +578,7 @@ POST `{hookurl}`
 
 The bidder is requesting all ads whose status has changed since the most recent audit status change observed on last poll (for this example, 2018-06-06T11:00:13Z). In this example, there are more ads that have changed than the maximum the exchange will return in a single call.
 
-GET `https://api.superads.com/management/v1/bidder/496/ads?
-auditStart=2018-06-06T11:00:13Z`
+GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=2018-06-06T11:00:13Z`
 
 ```json
 {
@@ -616,8 +615,7 @@ auditStart=2018-06-06T11:00:13Z`
 }
 ```
 
-GET `https://api.superads.com/management/v1/bidder/496/ads?
-auditStart=2018-06-06T17:43:11Z`
+GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=2018-06-06T17:43:11Z`
 
 ```json
 {
@@ -731,8 +729,7 @@ Given the bidding policy of the exchange and the initial audit status returned, 
 
 ### Bidder Polls For Updates <a name="bidderpollsforupdates2"></a>
 
-GET `https://api.advancedads.com/admgmt/v1/bidder/34/ads?
-auditStart=2018-06-06T11:00:13Z`
+GET `https://api.advancedads.com/admgmt/v1/bidder/34/ads?auditStart=2018-06-06T11:00:13Z`
 
 ```json
 {
