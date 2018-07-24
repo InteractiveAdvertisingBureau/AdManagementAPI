@@ -76,7 +76,6 @@ Jennifer Derke, Director of Product, Programmatic & Data, IAB Tech Lab
 - [Substitution Macros](#substitutionmacros)
 - [Typical Synchronization Flow](#typicalsynchronizationflow)
 - [Appendix A: Integration Checklist](#appendixa_integrationchecklist)
-  - [Notes](#notes)
 - [Appendix B: Examples](#appendixb_examples)
   - [Minimal Implementation](#minimalimplementation)
     - [Bidder Ad Submission](#bidderadsubmission1)
@@ -462,18 +461,11 @@ To facilitate integration, exchanges should provide a document similar to the be
     <th>Attributes Required</th>
     <td></td>
   </tr>
-</table>
-
-
-## Notes <a name="notes"></a>
-<table>
   <tr>
-    <td>
-Additional notes of relevance regarding this implementation.
-</td>
+    <th>Notes</th>
+    <td>Additional notes of relevance regarding this implementation.</td>
   </tr>
 </table>
-
 
 # Appendix B: Examples <a name="appendixb_examples"></a>
 
