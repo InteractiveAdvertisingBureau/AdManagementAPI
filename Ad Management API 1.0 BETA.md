@@ -278,9 +278,7 @@ For example:  <br />
 
 # Authentication <a name="authentication"></a>
 
-HTTP Basic authentication is used. Exchanges will provide bidders with a username and password. This username and password are combined with a colon (username:password) and base64 encoded. The result is used in the Authorization header in all calls the bidder makes to the API, e.g:
-
-`Authorization: Basic <base64 encoded value of "username:password">`
+In this version of the Ad Management API, authentication protocol is left to the discretion of the exchange or SSP implementing the API, and should be discussed with API users a priori.  
 
 # Resource Representations <a name="resourcerepresentations"></a>
 
@@ -370,9 +368,7 @@ It is recommended to use webhooks as a means of reducing the required polling fr
 
 ## Authentication <a name="authentication"></a>
 
-Authentication is performed in a similar fashion to that described above on the exchange side, with the registered username and password" being used as a part of the Basic auth header when making calls to the bidder, e.g.:
-
-`Authorization: Basic <base64 encoded value of "username:password">`
+In this version of the Ad Management API, authentication protocol is left to the discretion of the exchange or SSP implementing the API, and should be discussed with API users a priori.  
 
 ## Webhook Calls <a name="webhookcalls"></a> 
 
