@@ -74,7 +74,7 @@ Jennifer Derke, Director of Product, Programmatic & Data, IAB Tech Lab
   - [Webhook Calls](#webhookcalls)
 - [Expiration](#expiration)
   - [Re-activating Expired Ads](#reactivate)
-- [Re-audit](#reaudit)
+- [Requesting Re-Audit](#reaudit)
 - [Substitution Macros](#substitutionmacros)
 - [Typical Synchronization Flow](#typicalsynchronizationflow)
 - [Appendix A: Integration Checklist](#appendixa_integrationchecklist)
