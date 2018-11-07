@@ -66,13 +66,14 @@ Jennifer Derke, Director of Product, Programmatic & Data, IAB Tech Lab
 - [Endpoints](#endpoints)
 - [Authentication](#authentication)
 - [Resource Representations](#resourcerepresentations)
-  - [Webhook Registration](#webhookregistration)
   - [Collection Of Ads](#collectionofads)
   - [Ad](#ad)
   - [Audit](#audit)
 - [Webhooks](#webhooks)
-  - [Authentication](#authentication)
+  - [Registration and Authentication](#webhookauthentication)
   - [Webhook Calls](#webhookcalls)
+- [Expiration](#expiration)
+  - [Re-activating Expired Ads](#reactivate)
 - [Substitution Macros](#substitutionmacros)
 - [Typical Synchronization Flow](#typicalsynchronizationflow)
 - [Appendix A: Integration Checklist](#appendixa_integrationchecklist)
@@ -84,6 +85,7 @@ Jennifer Derke, Director of Product, Programmatic & Data, IAB Tech Lab
   - [Typical Implementation](#typicalimplementation)
     - [Bidder Ad Submission](#bidderadsubmission2)
     - [Bidder Polls For Updates](#bidderpollsforupdates2)
+    - [Bidder Re-activates an Ad](#bidderreactivates)
 - [Appendix C: Resources](#appendixc_resources)
 
 
@@ -237,15 +239,6 @@ Per "API Conventions" above, breaking changes require the major version number t
     <th>Description</th>
   </tr>
   <tr>
-    <td>{baseUrl}/bidder/{bidderId}/webhook</td>
-    <td>GET, PUT, PATCH</td>
-    <td><strong>GET:</strong> returns the webhook registration object for a given bidder. <br />
-<strong>PUT:</strong> replaces the webhook registration object for a given bidder. <br />
-<strong>PATCH:</strong> replaces only the specified fields in the webhook registration object for a given bidder. <br />
-
-No POST method is supplied as only a single  webhook registration object may exist.</td>
-  </tr>
-  <tr>
     <td>{baseUrl}/bidder/{bidderId}/ads</td>
     <td>GET, POST</td>
     <td><strong>GET:</strong> returns a collection of ads for a given bidder. This response may be sparse at the exchange's discretion (see "API conventions"). <br />
@@ -284,35 +277,6 @@ In this version of the Ad Management API, authentication protocol is left to the
 
 Resources are represented using JSON.
 
-## Webhook Registration <a name="webhookregistration"></a>
-
-A webhook registration resource is an object containing details of a bidder webhook which an exchange may use to notify the bidder upon changes to ads.
-
-<table>
-  <tr>
-    <th>Attribute</th>
-    <th>Type</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>hookurl</td>
-    <td>string</td>
-    <td>The bidder's webhook URL.</td>
-  </tr>
-  <tr>
-    <td>username</td>
-    <td>string</td>
-    <td>The username that should be used in Authorization headers.</td>
-  </tr>
-  <tr>
-    <td>password</td>
-    <td>string</td>
-    <td>The password that should be used in Authorization headers.</td>
-  </tr>
-</table>
-
-
- 
 
 ## Collection Of Ads <a name="collectionofads"></a>
 
@@ -362,17 +326,39 @@ Only the exchange may modify the audit object. Upon initial ad upload, the excha
 
 # Webhooks <a name="webhooks"></a>
 
-Exchanges may choose to support sending webhook calls to bidders to notify them of changes to ad audit status, and bidders may choose to receive such calls. Bidders register a webhook URL by manipulating the webhook registration object. 
+Exchanges may choose to support sending webhook calls to bidders to notify them of changes to ad audit status, and bidders may choose to receive such calls. 
 
 It is recommended to use webhooks as a means of reducing the required polling frequency substantially. Bidders should still poll occasionally to ensure that all changes are collected (to account for failures during webhook calls, etc.), but at a much lower frequency (such as once per day).
 
-## Authentication <a name="authentication"></a>
+## Registration and Authentication <a name="webhookauthentication"></a>
 
-In this version of the Ad Management API, authentication protocol is left to the discretion of the exchange or SSP implementing the API, and should be discussed with API users a priori.  
+In this version of the Ad Management API, the method of registration of a webhook URL and authentication protocol is left to the discretion of the exchange or SSP implementing the API. These matters should be discussed with API users a priori.  
 
 ## Webhook Calls <a name="webhookcalls"></a> 
 
-If an exchange supports webhooks and a bidder has registered a webhook registration object, upon status change for an ad or ad(s), the exchange will POST a collection of ads to the bidder's "hookurl", with an authorization header as described above.The JSON in the POST may be sparse, containing only changes. The bidder must respond 204 No Content if the webhook is successfully processed. In the event of failures such as timeouts, non-2xx status codes, etc., it is recommended the exchange make at least 3 further attempts with a delay of 30 seconds between each request before abandoning the attempt. It is recommended that exchanges record permanent failures for offline analysis.
+If an exchange supports webhooks and the exchange and the bidder have arranged to enable webhook calls, the exchange will POST a collection of ads to the bidder's webhook URL upon status change for an ad or ad(s). The JSON in the POST may be sparse, containing only changes. The bidder must respond 204 No Content if the webhook is successfully processed. In the event of failures such as timeouts, non-2xx status codes, etc., it is recommended the exchange make at least 3 further attempts with a delay of 30 seconds between each request before abandoning the attempt. It is recommended that exchanges record permanent failures for offline analysis.
+
+# Expiration <a name="expiration"></a>
+
+Exchanges may not wish to maintain a record of Ads indefinitely. Accordingly, the idea of "expiration" is supported. Expiration is an audit status that signals that the exchange is due to delete the Ad in future if no action is taken.
+
+The following are to be decided by the exchange, but must be communicated a priori to bidders:
+
+- The criteria for when an Ad's audit status becomes "expired"
+- The criteria for when an Ad is deleted
+- Whether Ads with an audit status of "expired" may bid or not
+
+Typically, these criteria will be in the form of days, e.g. an exchange may define a policy like:
+
+- Ad expiration: 30 days of inactivity
+- Ad deletion: 120 days after expiry
+- Expired ad bidding policy: Bidders must explicitly re-activate an ad (or, alternatively, bidding triggers re-activation)
+
+## Re-activating Expired Ads <a name="reactivate"></a>
+
+If exchanges require explicit re-activation of expired ads, bidders may do so by touching the ad; a PUT or a PATCH against the ad constitutes a touch. 
+
+Whether such re-activated ads can be immediately used or must go through another audit is a matter of exchange policy.
 
 # Substitution Macros <a name="substitutionmacros"></a>
 
@@ -384,19 +370,13 @@ The values for these custom macros are supplied by the bidder during bidding.
 
 Authentication is not shown here for brevity.
 
-During initial integration, the bidder registers a webhook URL by making an HTTP PUT call to:
-
-`{baseUrl}/bidder/{bidderId}/webhook`
-
-... with a webhook registration object.
-
 As ads are created, the bidder places the ads into a queue for submission. The bidder makes one or more HTTP POST calls to:
 
 `{baseUrl}/bidder/{bidderId}/ads`
 
 ... with a body containing a single Ad resource. Exchanges will periodically update the audit object inside the ad with modifications to the **status** (e.g. to set ads as approved or denied), and any other fields as a result of the exchange's assessment of the ad. Bidders should expect that that fields in the audit object could change at any time.
 
-As ads change audit status, the exchange makes HTTP POST calls to the "hookurl" that is registered, containing a collection of ads.
+As ads change audit status, the exchange makes HTTP POST calls to pre-arranged bidder webhook URL, with each call containing a collection of ads (one or more).
 
 Bidders may also choose to periodically poll for updates (thereby preventing missed information if webhook calls fail) by making HTTP GET calls to:
 
@@ -450,6 +430,10 @@ To facilitate integration, exchanges should provide a document similar to the be
     <td></td>
   </tr>
   <tr>
+  	<th>Ad Retention Policy</th>
+    <td>(Days to expiry, days to deletion, bidding behaviour for expired ads</td>
+  </tr>
+  <tr>
     <th>Ad IDs of Record</th>
     <td>(Bidder or Exchange)</td>
   </tr>
@@ -495,6 +479,10 @@ To facilitate integration, exchanges should provide a document similar to the be
   <tr>
     <th>Markup and Bidding Policy</th>
     <td>Permissive bidding, ad markup in bid response</td>
+  </tr>
+  <tr>
+  	<th>Ad Retention Policy</th>
+    <td>Ads expire after 14 days of inactivity and are deleted after 30 days in expired status. Expired ads may be used in bidding and will be automatically re-activated.</td>
   </tr>
   <tr>
     <th>Ad IDs of Record</th>
@@ -671,6 +659,10 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=2018-06-06
     <td>Restrictive bidding, ad markup in bid response</td>
   </tr>
   <tr>
+  	<th>Ad Retention Policy</th>
+    <td>Ads expire after 14 days of inactivity and are deleted after 30 days in expired status. Bidders must explicitly re-activate expired ads.</td>
+  </tr>
+  <tr>
     <th>Ad IDs of Record</th>
     <td>Bidder</td>
   </tr>
@@ -751,6 +743,35 @@ GET `https://api.advancedads.com/admgmt/v1/bidder/34/ads?auditStart=2018-06-06T1
 ```
 
 In the above scenario, the exchange has approved the ad but has updated it to reflect that, in the its opinion, the ad should be classified as category Automotive, and has auto-play in-banner video. The equivalent webhook call would be similar (see above example).
+
+### Bidder Re-activates an Ad <a name="bidderreactivates"></a>
+
+The bidder may find an ad to have an audit status of 6 (Expired) either upon polling for changes or through a webhook call. Given the policy of this exchange, such an ad is not eligible for bidding. If the bidder wishes to use the ad again, it can simply touch the ad to trigger its re-activation.
+
+PATCH `https://api.advancedads.com/admgmt/v1/bidder/34/ads/557391`
+
+```json
+{}
+```
+
+Response:
+
+```json
+{
+  "count": 1,
+  "ads": [
+    {
+      "id": "557391",
+      "init": "2018-06-05T17:51:52Z",
+      "lastmod": "2018-06-15T08:45:23Z",
+      "audit": {
+        "status": 1,
+        "lastmod": "2018-06-15T08:45:23Z"
+      }
+    }
+  ]
+}
+```
 
 # Appendix C: Resources <a name="appendixc_resources"></a>
 
