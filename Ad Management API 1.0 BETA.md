@@ -74,6 +74,7 @@ Jennifer Derke, Director of Product, Programmatic & Data, IAB Tech Lab
   - [Webhook Calls](#webhookcalls)
 - [Expiration](#expiration)
   - [Re-activating Expired Ads](#reactivate)
+- [Requesting Re-Audit](#reaudit)
 - [Substitution Macros](#substitutionmacros)
 - [Typical Synchronization Flow](#typicalsynchronizationflow)
 - [Appendix A: Integration Checklist](#appendixa_integrationchecklist)
@@ -358,7 +359,13 @@ Typically, these criteria will be in the form of days, e.g. an exchange may defi
 
 If exchanges require explicit re-activation of expired ads, bidders may do so by touching the ad; a PUT or a PATCH against the ad constitutes a touch. 
 
-Whether such re-activated ads can be immediately used or must go through another audit is a matter of exchange policy.
+Whether such re-activated ads can be immediately used or must go through another audit is a matter of exchange policy, and bidders should consult the audit status in the Ad object in the response to the PUT/PATCH request.
+
+# Requesting Re-Audit <a name="reaudit"></a>
+
+Bidders may request that exchanges re-audit ads with an audit status of 4 (Denied) or 5 (Changed; Resubmission Requested) by touching the ad; a PUT or a PATCH against the ad constitutes a touch. Bidders should not request re-audit of ads without addressing the audit feedback returned by exchanges. 
+
+Whether exchanges permit re-audit requests for a given ad (or any ads) is a matter of exchange policy; should an exchange refuse such a request, the audit status in the Ad object in the response to the PUT/PATCH request should be left unchanged.
 
 # Substitution Macros <a name="substitutionmacros"></a>
 
