@@ -225,7 +225,7 @@ AdCOM objects returned in responses may contain a sparse fieldset to save bandwi
 
 ## Dates and Times <a name="datesandtimes"></a>
 
-All dates/times must be specified in the format of ISO 8601 ([using the profile defined by W3C](https://www.w3.org/TR/NOTE-datetime)). More specifically, dates/times must be expressed as complete date plus hours, minutes and seconds, and must always be expressed in UTC. Values should always be rounded **down** to the nearest second to so that when queries are made using a filter, ads are not missed due to rounding.
+All dates/times must be specified in the format of millis since Unix epoch (January 1, 1970 00:00:00 UTC). If an implementer internally uses a more precise timestamp, values should always be rounded **down** to the nearest millisecond to so that when queries are made using a filter, ads are not missed due to rounding.
 
 # Endpoints <a name="endpoints"></a>
 
@@ -248,14 +248,14 @@ An "auditStart" filter, at a minimum, must be set on the query string to constra
 
 The available filters are: <br />
 
-**auditStart:** Beginning date/time for the "lastmod" value from the Audit object of returned ads (date/time greater than this value). (Required) <br />
-**auditEnd:** Ending date/time for the "lastmod" value from the Audit object of returned ads (date/time less than or equal to this value). (Optional, now is assumed if omitted) <br />
+**auditStart:** Beginning timestamp for the "lastmod" value from the Audit object of returned ads (timestamp greater than this value). (Required) <br />
+**auditEnd:** Ending timestamp for the "lastmod" value from the Audit object of returned ads (timestamp less than or equal to this value). (Optional, now is assumed if omitted) <br />
 
 See "API conventions" regarding date format. <br />
 
 For example:  <br />
 
-`/ads?auditStart=2018-06-05T17:51:54Z`
+`/ads?auditStart=1528221114000`
 
 
 <strong>POST:</strong> submits a single ad. The body must contain a only an Ad object (and its children). Returns a collection of ads containing the ad submitted, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions").</td>
@@ -323,7 +323,7 @@ Only the bidder may modify the ad object and its' children, excepting the Audit 
 
 Subordinate to the Ad object is a AdCOM 1.x audit object. See the [AdCOM specification](https://github.com/InteractiveAdvertisingBureau/AdCOM) for details. Among the many objects that may be present subordinate to the Ad object, it is specifically noted in this specification because its behaviour in the context of ad management is worth elaborating on.
 
-Only the exchange may modify the audit object. Upon initial ad upload, the exchange must initialize the "init" and "lastmod" field to the date/time of the submission of the ad. The "lastmod" field must be updated at any change of this object.
+Only the exchange may modify the audit object. Upon initial ad upload, the exchange must initialize the "init" and "lastmod" field to the timestamp of the submission of the ad. The "lastmod" field must be updated at any change of this object.
 
 # Webhooks <a name="webhooks"></a>
 
@@ -389,7 +389,7 @@ Bidders may also choose to periodically poll for updates (thereby preventing mis
 
 `{baseUrl}/bidder/{bidderId}/ads?auditStart={timestamp}`
 
-Bidders should record the audit "lastmod" for each ad, and choose an auditStart value based on the most recently observed audit update date/time.
+Bidders should record the audit "lastmod" for each ad, and choose an auditStart value based on the most recently observed audit update timestamp.
 
 Alternatively, bidders may query for the status of a particular ad by making an HTTP GET call to:
 
@@ -531,11 +531,11 @@ Response:
   "ads": [
     {
       "id": "557391",
-      "init": "2018-06-05T17:51:52Z",
-      "lastmod": "2018-06-05T17:51:52Z",
+      "init": 1528221112000,
+      "lastmod": 1528221112000,
       "audit": {
         "status": 2,
-        "lastmod": "2018-06-05T17:51:52Z"
+        "lastmod": 1528221112000
       }
     }
   ]
@@ -554,11 +554,11 @@ POST `{hookurl}`
   "ads": [
     {
       "id": "557391",
-      "lastmod": "2018-06-05T17:51:52Z",
+      "lastmod": 1528221112000,
       "audit": {
         "status": 4,
         "feedback": "Content disallowed by exchange policy.",
-        "lastmod": "2018-06-06T12:36:27Z"
+        "lastmod": 1528288587000
       }
     }
   ]
@@ -567,9 +567,9 @@ POST `{hookurl}`
 
 ### Bidder Polls For Updates <a name="bidderpollsforupdates1"></a>
 
-The bidder is requesting all ads whose status has changed since the most recent audit status change observed on last poll (for this example, 2018-06-06T11:00:13Z). In this example, there are more ads that have changed than the maximum the exchange will return in a single call.
+The bidder is requesting all ads whose status has changed since the most recent audit status change observed on last poll (for this example, timestamp 1528282813000). In this example, there are more ads that have changed than the maximum the exchange will return in a single call.
 
-GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=2018-06-06T11:00:13Z`
+GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528282813000`
 
 ```json
 {
@@ -578,35 +578,35 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=2018-06-06
   "ads": [
     {
       "id": "557391",
-      "lastmod": "2018-06-05T17:51:52Z",
+      "lastmod": 1528221112000,
       "audit": {
         "status": 4,
         "feedback": "Content disallowed by exchange policy.",
-        "lastmod": "2018-06-06T12:36:27Z"
+        "lastmod": 1528288587000
       }
     },
     {
       "id": "557533",
-      "lastmod": "2018-06-06T12:51:49Z",
+      "lastmod": 1528289509000,
       "audit": {
         "status": 3,
-        "lastmod": "2018-06-06T12:51:49Z"
+        "lastmod": 1528289509000
       }
     },
     { ... },
     {
       "id": "557398",
-      "lastmod": "2018-06-05T18:22:42Z",
+      "lastmod": 1528222962000,
       "audit": {
         "status": 3,
-        "lastmod": "2018-06-06T17:43:11Z"
+        "lastmod": 1528306991000
       }
     }
   ]
 }
 ```
 
-GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=2018-06-06T17:43:11Z`
+GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000`
 
 ```json
 {
@@ -615,19 +615,19 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=2018-06-06
   "ads": [
     {
       "id": "557231",
-      "lastmod": "2018-06-05T19:37:14Z",
+      "lastmod": 1528227434000,
       "audit": {
         "status": 4,
         "feedback": "Content disallowed by exchange policy.",
-        "lastmod": "2018-06-06T17:45:36Z"
+        "lastmod": 1528307136000
       }
     },
     {
       "id": "557599",
-      "lastmod": "2018-06-03T16:21:29Z",
+      "lastmod": 1528042889000,
       "audit": {
         "status": 3,
-        "lastmod": "2018-06-06T17:47:03Z"
+        "lastmod": 1528307223000
       }
     }
   ]
@@ -709,11 +709,11 @@ Response:
   "ads": [
     {
       "id": "557391",
-      "init": "2018-06-05T17:51:52Z",
-      "lastmod": "2018-06-05T17:51:52Z",
+      "init": 1528221112000,
+      "lastmod": 1528221112000,
       "audit": {
         "status": 1,
-        "lastmod": "2018-06-05T17:51:52Z"
+        "lastmod": 1528221112000
       }
     }
   ]
@@ -724,7 +724,7 @@ Given the bidding policy of the exchange and the initial audit status returned, 
 
 ### Bidder Polls For Updates <a name="bidderpollsforupdates2"></a>
 
-GET `https://api.advancedads.com/admgmt/v1/bidder/34/ads?auditStart=2018-06-06T11:00:13Z`
+GET `https://api.advancedads.com/admgmt/v1/bidder/34/ads?auditStart=1528282813000`
 
 ```json
 {
@@ -734,7 +734,7 @@ GET `https://api.advancedads.com/admgmt/v1/bidder/34/ads?auditStart=2018-06-06T1
     { ... },
     {
       "id": "557391",
-      "lastmod": "2018-06-05T17:51:52Z",
+      "lastmod": 1528221112000,
       "audit": {
         "status": 3,
         "feedback": "Corrected category. Added missing attribute.",
@@ -742,7 +742,7 @@ GET `https://api.advancedads.com/admgmt/v1/bidder/34/ads?auditStart=2018-06-06T1
           "cat": "1",
           "attr": 6
         },
-        "lastmod": "2018-06-06T12:36:27Z"
+        "lastmod": 1528288587000
       }
     }
   ]
@@ -769,11 +769,11 @@ Response:
   "ads": [
     {
       "id": "557391",
-      "init": "2018-06-05T17:51:52Z",
-      "lastmod": "2018-06-15T08:45:23Z",
+      "init": 1528221112000,
+      "lastmod": 1529052323000,
       "audit": {
         "status": 1,
-        "lastmod": "2018-06-15T08:45:23Z"
+        "lastmod": 1529052323000
       }
     }
   ]
