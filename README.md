@@ -14,7 +14,7 @@ Ad management occurs when a buyer (or a representative party) submits creatives 
 https://iabtechlab.com/openmedia 
 
 #### AdCOM
-https://raw.githubusercontent.com/InteractiveAdvertisingBureau/AdCOM
+https://github.com/InteractiveAdvertisingBureau/AdCOM
 
 #### OpenRTB 
 https://github.com/InteractiveAdvertisingBureau/openrtb
