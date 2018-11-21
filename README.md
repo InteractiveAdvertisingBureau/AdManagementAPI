@@ -1,14 +1,10 @@
 ![IAB Tech Lab](https://drive.google.com/uc?id=10yoBoG5uRETSXRrnJPUDuONujvADrSG1)
 
-# **Ad Management API v1.0 Beta**
+# **Ad Management API v1.0**
 
-BETA DRAFT
+FINAL
 
-July 24, 2018
-
-
-#### Beta Launch
-Ad Management API Specification will have a 60-day public comment period, running through September 24, 2018. Beta testing by the IAB Tech Lab OpenRTB Working Group will be ongoing. Industry members are encouraged to actively participate throughout the beta period, and to get involved with the OpenRTB Working Group. The group will evaluate and incorporate the feedback received, as well as real world insights from beta testing, to produce final specs that will be ready for full industry adoption by the end of the year. 
+November 15, 2018
 
 #### Summary
 Ad management occurs when a buyer (or a representative party) submits creatives for creative approval, supply platforms approve or disapprove of those creatives, and buyers receive feedback accordingly. Before the publication of this technical standard, supply platforms have relied on proprietary methods and tools for ad management, or none at all. 
