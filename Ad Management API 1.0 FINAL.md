@@ -514,7 +514,7 @@ POST `https://api.superads.com/management/v1/bidder/496/ads`
 ```json
 {
   "id": "557391",
-  "adomain": "advertiser.com",
+  "adomain": ["advertiser.com"],
   "iurl": "http://cdn.dsp.com/iurls/557391.gif",
   "display": {
     "w": 300,
@@ -691,7 +691,7 @@ POST `https://api.advancedads.com/admgmt/v1/bidder/34/ads`
 {
   "id": "557391",
   "cat": "653",
-  "adomain": "ford.com",
+  "adomain": ["ford.com"],
   "display": {
     "w": 300,
     "h": 250,
