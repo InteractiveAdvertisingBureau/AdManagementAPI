@@ -63,6 +63,7 @@ Jennifer Derke, Director of Product, Programmatic & Data, IAB Tech Lab
   - [Status Codes](#statuscodes)
   - [Sparse Fieldsets](#sparsefieldsets)
   - [Dates And Times](#datesandtimes)
+  - [Pagination](#pagination)
 - [Endpoints](#endpoints)
 - [Authentication](#authentication)
 - [Resource Representations](#resourcerepresentations)
@@ -227,6 +228,26 @@ AdCOM objects returned in responses may contain a sparse fieldset to save bandwi
 
 All dates/times must be specified in the format of millis since Unix epoch (January 1, 1970 00:00:00 UTC). If an implementer internally uses a more precise timestamp, values should always be rounded **down** to the nearest millisecond to so that when queries are made using a filter, ads are not missed due to rounding.
 
+## API Pagination <a name="pagination"></a>
+
+When querying anything that can span more than one page, we need to ensure all the results are returned, and there is no infinite loop when going from one page to another.  The solution that must be followed to get the next page is pass a token based on the last modified timestamp and the id.  This is based on: https://phauer.com/2018/web-api-pagination-timestamp-id-continuation-token/
+
+This will ensure these two edge cases are covered: 
+- no results are repeated on the next page from the previous page (unless the timestamp got changed in mean time)
+- no results get skipped regardless if there is the same timestamp for multiple ads.
+
+
+The token will be passes like this: /ads?auditStart=1528221114000_421
+- This will mean that anything **after** 1528221114000 will be returned and anything with timestamp **equal to** 1528221114000 and id **larger** than 421 will be returned.
+- If there is no id specified, the results with a timestamp **greater** than specified will be returned. **No exception** should be thrown in this case.
+
+
+Requirements:
+- results returned have to be sorted based on both the timestmap (lastmod for most of the usecases) and on the id (in that order)
+- the id needs to be unique, so it should either be internal id or the id that gets passed on creation of the ad. (whatever bidders will)
+
+
+
 # Endpoints <a name="endpoints"></a>
 
 Bidders will interact with the Ad Management API by making HTTP calls to specific endpoints. Exchanges will specify a **base URL** (denoted using the {baseUrl} placeholder in this document) and a **bidder ID** representing a given bidder/demand partner (denoted using the {bidderId} placeholder in this document). All endpoints are relative to this base URL. The base URL must include the major version of the specification implemented in the form of "v#". For example, an exchange implementing version 1.0 of this API may define its base URL as `https://api.exchange.com/management/v1`. For example, assuming a bidder ID of 492 the ads endpoint will be reached at `https://api.exchange.com/management/v1/bidder/492/ads`.
@@ -248,14 +269,14 @@ An "auditStart" filter, at a minimum, must be set on the query string to constra
 
 The available filters are: <br />
 
-**auditStart:** Beginning timestamp for the "lastmod" value from the Audit object of returned ads (timestamp greater than this value). (Required) <br />
+**auditStart:** Beginning timestamp for the "lastmod" value from the Audit object of returned ads (timestamp greater than this value). (Required).  There are two formats for this which must be accepted: timestamp and timestamp_Id.  The id would be the id of the last object returned<br />
 **auditEnd:** Ending timestamp for the "lastmod" value from the Audit object of returned ads (timestamp less than or equal to this value). (Optional, now is assumed if omitted) <br />
 
-See "API conventions" regarding date format. <br />
+See "API conventions" regarding date format and pagination. <br />
 
 For example:  <br />
 
-`/ads?auditStart=1528221114000`
+`/ads?auditStart=1528221114000_421`
 
 
 <strong>POST:</strong> submits a single ad. The body must contain a only an Ad object (and its children). Returns a collection of ads containing the ad submitted, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions").</td>
@@ -298,6 +319,11 @@ A collection of ads is an object containing one or more ads with additional meta
     <td>more</td>
     <td>integer</td>
     <td>A boolean flag indicating that this collection is a subset; the number of ads returned has been limited by exchange policy. See "Endpoints" above. May be omitted when not needed.</td>
+  </tr>
+  <tr>
+    <td>nextPage</td>
+    <td>URL</td>
+    <td>A url that is going to point to the next page if the more is true, null otherwise.  See "Pagination" above. E.g. `https://{baseUrl}bidder/{bidderId}/ads?auditStart=1528221114000_421`</td>
   </tr>
   <tr>
     <td>ads</td>
@@ -575,6 +601,7 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528282813
 {
   "count": 100,
   "more": 1,
+  "nextPage": "https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000_557398",
   "ads": [
     {
       "id": "557391",
