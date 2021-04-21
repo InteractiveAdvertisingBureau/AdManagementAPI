@@ -230,22 +230,29 @@ All dates/times must be specified in the format of millis since Unix epoch (Janu
 
 ## API Pagination <a name="pagination"></a>
 
-When querying anything that can span more than one page, we need to ensure all the results are returned, and there is no infinite loop when going from one page to another.  The solution that must be followed to get the next page is pass a token based on the last modified timestamp and the id.  This is based on: https://phauer.com/2018/web-api-pagination-timestamp-id-continuation-token/
+Pagination can be very tricky to implement correctly and ensure that all the ad changes can be picked up.
 
-This will ensure these two edge cases are covered: 
+These following edge cases need to be are covered:
 - no results are repeated on the next page from the previous page (unless the timestamp got changed in mean time)
 - no results get skipped regardless if there is the same timestamp for multiple ads.
+- the nexPage returns different results (this would happen if the timestamp is the same for ads spanning two pages)
 
+In order to combat this it is suggested to implement pagination with timestamp and id. This is based on: https://phauer.com/2018/web-api-pagination-timestamp-id-continuation-token/
 
-The token will be passes like this: /ads?auditStart=1528221114000_421
+The exchange is responsible for correctly populating the nextPage field if there are more results.  It is upto the exchange how the url will look. 
+
+Here are a few suggestions on how it can look:
+- /ads?auditStart=1528221114000_421 
+- /ads?auditStart=1528221114000&timestampId=421
+
+In the examples above:
 - This will mean that anything **after** 1528221114000 will be returned and anything with timestamp **equal to** 1528221114000 and id **larger** than 421 will be returned.
 - If there is no id specified, the results with a timestamp **greater** than specified will be returned. **No exception** should be thrown in this case.
 
 
-Requirements:
+Requirements for correct implementation:
 - results returned have to be sorted based on both the timestmap (lastmod for most of the usecases) and on the id (in that order)
-- the id needs to be unique, so it should either be internal id or the id that gets passed on creation of the ad. (whatever bidders will)
-
+- the id needs to be unique, so it should either be an internal id or the id that gets passed on creation of the ad. (whatever bidders will)
 
 
 # Endpoints <a name="endpoints"></a>
@@ -269,14 +276,15 @@ An "auditStart" filter, at a minimum, must be set on the query string to constra
 
 The available filters are: <br />
 
-**auditStart:** Beginning timestamp for the "lastmod" value from the Audit object of returned ads (timestamp greater than this value). (Required).  There are two formats for this which must be accepted: timestamp and timestamp_Id.  The id would be the id of the last object returned<br />
+**auditStart:** Beginning timestamp for the "lastmod" value from the Audit object of returned ads (timestamp greater than this value). (Required). <br />
+**timestampId** Needed for correct pagination, take a look at the pagination sections on the details. (optional)<br />
 **auditEnd:** Ending timestamp for the "lastmod" value from the Audit object of returned ads (timestamp less than or equal to this value). (Optional, now is assumed if omitted) <br />
 
 See "API conventions" regarding date format and pagination. <br />
 
 For example:  <br />
 
-`/ads?auditStart=1528221114000_421`
+`/ads?auditStart=1528221114000&timestampId=421`
 
 
 <strong>POST:</strong> submits a single ad. The body must contain a only an Ad object (and its children). Returns a collection of ads containing the ad submitted, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions").</td>
@@ -323,7 +331,7 @@ A collection of ads is an object containing one or more ads with additional meta
   <tr>
     <td>nextPage</td>
     <td>URL</td>
-    <td>A url that is going to point to the next page if the more is true, null otherwise.  See "Pagination" above. E.g. `https://{baseUrl}bidder/{bidderId}/ads?auditStart=1528221114000_421`</td>
+    <td>A url that is going to point to the next page if the more is true, null otherwise.  See "Pagination" above. E.g. `https://{baseUrl}bidder/{bidderId}/ads?auditStart=1528221114000&timestampId=421`</td>
   </tr>
   <tr>
     <td>ads</td>
