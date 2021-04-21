@@ -232,7 +232,7 @@ All dates/times must be specified in the format of millis since Unix epoch (Janu
 
 Pagination can be very tricky to implement correctly and ensure that all the ad changes can be picked up.
 
-These following edge cases need to be are covered:
+The following edge cases need to be covered:
 - no results are repeated on the next page from the previous page (unless the timestamp got changed in mean time)
 - no results get skipped regardless if there is the same timestamp for multiple ads.
 - the nexPage returns different results (this would happen if the timestamp is the same for ads spanning two pages)
@@ -609,7 +609,7 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528282813
 {
   "count": 100,
   "more": 1,
-  "nextPage": "https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000_557398",
+  "nextPage": "https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000&timestampId=557398",
   "ads": [
     {
       "id": "557391",
