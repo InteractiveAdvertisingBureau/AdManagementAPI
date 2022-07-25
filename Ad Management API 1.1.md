@@ -481,7 +481,7 @@ To facilitate integration, exchanges should provide a document similar to the be
   </tr>
   <tr>
     <th>Version Used</th>
-    <td>v1.0</td>
+    <td>v1.1</td>
   </tr>
   <tr>
     <th>Rate Limit</th>
