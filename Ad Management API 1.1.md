@@ -789,7 +789,7 @@ Response:
 }
 ```
 
-## Appendix C: API Pagination <a name="pagination"></a>
+# Appendix C: API Pagination <a name="pagination"></a>
 
 When it comes to implementing pagination, there are subtleties that implementers must consider to ensure correct implementation, otherwise an infinite loop or missing ads could occur.
 
