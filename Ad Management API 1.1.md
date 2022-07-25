@@ -231,7 +231,7 @@ All dates/times must be specified in the format of millis since Unix epoch (Janu
 
 # Endpoints <a name="endpoints"></a>
 
-Bidders will interact with the Ad Management API by making HTTP calls to specific endpoints. Exchanges will specify a **base URL** (denoted using the {baseUrl} placeholder in this document) and a **bidder ID** representing a given bidder/demand partner (denoted using the {bidderId} placeholder in this document). All endpoints are relative to this base URL. The base URL must include the major version of the specification implemented in the form of "v#". For example, an exchange implementing version 1.0 of this API may define its base URL as `https://api.exchange.com/management/v1`. For example, assuming a bidder ID of 492 the ads endpoint will be reached at `https://api.exchange.com/management/v1/bidder/492/ads`.
+Bidders will interact with the Ad Management API by making HTTP calls to specific endpoints. Exchanges will specify a **base URL** (denoted using the {baseUrl} placeholder in this document) and a **bidder ID** representing a given bidder/demand partner (denoted using the {bidderId} placeholder in this document). All endpoints are relative to this base URL. The base URL must include the major version of the specification implemented in the form of "v#". For example, an exchange implementing version 1.1 of this API may define its base URL as `https://api.exchange.com/management/v1`. For example, assuming a bidder ID of 492 the ads endpoint will be reached at `https://api.exchange.com/management/v1/bidder/492/ads`.
 
 Per "API Conventions" above, breaking changes require the major version number to be iterated, and partners must deal gracefully with unexpected fields, so the minor version number is not required in the URL and its omission provide ease of upgrade. 
 
@@ -660,7 +660,7 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991
   </tr>
   <tr>
     <th>Version Used</th>
-    <td>v1.0</td>
+    <td>v1.1</td>
   </tr>
   <tr>
     <th>Rate Limit</th>
