@@ -1,10 +1,8 @@
 ![IAB Tech Lab](https://drive.google.com/uc?id=10yoBoG5uRETSXRrnJPUDuONujvADrSG1)
 
-# **Ad Management API v1.0**
+# **Ad Management API v1.1**
 
-FINAL
-
-November 15, 2018
+July 25, 2022
 
 #### Summary
 Ad management occurs when a buyer (or a representative party) submits creatives for creative approval, supply platforms approve or disapprove of those creatives, and buyers receive feedback accordingly. Before the publication of this technical standard, supply platforms have relied on proprietary methods and tools for ad management, or none at all. 
