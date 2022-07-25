@@ -1,17 +1,17 @@
 ![IAB Tech Lab](https://drive.google.com/uc?id=10yoBoG5uRETSXRrnJPUDuONujvADrSG1)
 
-# OpenRTB Ad Management API v1.0 Final Specification
+# OpenRTB Ad Management API v1.1 Specification
 
 **OpenRTB 3.0 and AdCOM Companion Specification**
 
 **FINAL**
 
-November 15, 2018
+July 25, 2022
 
 
 **Executive Summary**
 
-The new IAB Tech Lab Ad Management API specification is part of the [OpenMedia specification suite](iabtechlab.com/openmedia). 
+The IAB Tech Lab Ad Management API specification is part of the [OpenMedia specification suite](iabtechlab.com/openmedia). 
 
 Ad management occurs when a buyer (or a representative party) submits creatives for creative approval, supply platforms approve or disapprove of those creatives, and buyers receive feedback accordingly. Before the publication of this technical standard, supply platforms have relied on proprietary methods and tools for ad management, or none at all. 
 
@@ -63,7 +63,6 @@ Jennifer Derke, Director of Product, Programmatic & Data, IAB Tech Lab
   - [Status Codes](#statuscodes)
   - [Sparse Fieldsets](#sparsefieldsets)
   - [Dates And Times](#datesandtimes)
-  - [Pagination](#pagination)
 - [Endpoints](#endpoints)
 - [Authentication](#authentication)
 - [Resource Representations](#resourcerepresentations)
@@ -88,7 +87,9 @@ Jennifer Derke, Director of Product, Programmatic & Data, IAB Tech Lab
     - [Bidder Ad Submission](#bidderadsubmission2)
     - [Bidder Polls For Updates](#bidderpollsforupdates2)
     - [Bidder Re-activates an Ad](#bidderreactivates)
-- [Appendix C: Resources](#appendixc_resources)
+- [Appendix C: API Pagination](#pagination)
+- [Appendix D: Resources](#appendixd_resources)
+
 
 
 # Introduction and Background <a name="intro"></a>
@@ -228,33 +229,6 @@ AdCOM objects returned in responses may contain a sparse fieldset to save bandwi
 
 All dates/times must be specified in the format of millis since Unix epoch (January 1, 1970 00:00:00 UTC). If an implementer internally uses a more precise timestamp, values should always be rounded **down** to the nearest millisecond to so that when queries are made using a filter, ads are not missed due to rounding.
 
-## API Pagination <a name="pagination"></a>
-
-Pagination can be very tricky to implement correctly and ensure that all the ad changes can be picked up.
-
-The following edge cases need to be covered:
-- no results are repeated on the next page from the previous page (unless the timestamp got changed in mean time)
-- no results get skipped regardless if there is the same timestamp for multiple ads.
-- the nexPage returns different results (this would happen if the timestamp is the same for ads spanning two pages)
-
-In order to combat this it is suggested to implement pagination with timestamp and id. This is based on: https://phauer.com/2018/web-api-pagination-timestamp-id-continuation-token/
-
-The exchange is responsible for correctly populating the nextPage field if there are more results.  It is upto the exchange how the url will look. 
-
-Here are a few suggestions on how it can look:
-- /ads?auditStart=1528221114000_421 
-- /ads?auditStart=1528221114000&timestampId=421
-
-In the examples above:
-- This will mean that anything **after** 1528221114000 will be returned and anything with timestamp **equal to** 1528221114000 and id **larger** than 421 will be returned.
-- If there is no id specified, the results with a timestamp **greater** than specified will be returned. **No exception** should be thrown in this case.
-
-
-Requirements for correct implementation:
-- results returned have to be sorted based on both the timestmap (lastmod for most of the usecases) and on the id (in that order)
-- the id needs to be unique, so it should either be an internal id or the id that gets passed on creation of the ad. (whatever bidders will)
-
-
 # Endpoints <a name="endpoints"></a>
 
 Bidders will interact with the Ad Management API by making HTTP calls to specific endpoints. Exchanges will specify a **base URL** (denoted using the {baseUrl} placeholder in this document) and a **bidder ID** representing a given bidder/demand partner (denoted using the {bidderId} placeholder in this document). All endpoints are relative to this base URL. The base URL must include the major version of the specification implemented in the form of "v#". For example, an exchange implementing version 1.0 of this API may define its base URL as `https://api.exchange.com/management/v1`. For example, assuming a bidder ID of 492 the ads endpoint will be reached at `https://api.exchange.com/management/v1/bidder/492/ads`.
@@ -272,19 +246,19 @@ Per "API Conventions" above, breaking changes require the major version number t
     <td>GET, POST</td>
     <td><strong>GET:</strong> returns a collection of ads for a given bidder. This response may be sparse at the exchange's discretion (see "API conventions"). <br />
 
-An "auditStart" filter, at a minimum, must be set on the query string to constrain the number of ads returned, else exchanges may choose to return a 400 status code. Exchanges may limit the number of ads in the returned collection at their discretion. If the result set is a subset of available ads, this will be indicated in the result (see "Collection of ads"). Bidders may fetch the remaining ads by examining the last modification date of the Audit object of the final ad in the collection (the most recently updated ad) and use this as the "auditStart" filter for a subsequent request, repeating until the bidder has gathered all updates. <br />
+An "auditStart" filter, at a minimum, must be set on the query string to constrain the number of ads returned, else exchanges may choose to return a 400 status code. Exchanges may limit the number of ads in the returned collection at their discretion. If the result set is a subset of available ads, this will be indicated in the result (see "Collection of ads"). Bidders may fetch the remaining ads by calling the URL included in the "nextPage" field, repeating until the bidder has gathered all updates. <br />
 
 The available filters are: <br />
 
-**auditStart:** Beginning timestamp for the "lastmod" value from the Audit object of returned ads (timestamp greater than this value). (Required). <br />
-**timestampId** Needed for correct pagination, take a look at the pagination sections on the details. (optional)<br />
+**auditStart:** Beginning timestamp for the "lastmod" value from the Audit object of returned ads. (Required). <br />
+**id:** Needed for correct pagination when fetching subsequent pages. See <a href="#pagination">Appendix D: API Pagination</a> for more details. (Optional)<br />
 **auditEnd:** Ending timestamp for the "lastmod" value from the Audit object of returned ads (timestamp less than or equal to this value). (Optional, now is assumed if omitted) <br />
 
-See "API conventions" regarding date format and pagination. <br />
+See <a href="#apiconventions">API conventions</a> regarding date format and <a href="#pagination">Appendix D: Pagination</a> for details about correctly implementing pagination and using the "auditStart" and "id" fields. <br />
 
-For example:  <br />
+Example:  <br />
 
-`/ads?auditStart=1528221114000&timestampId=421`
+`{baseUrl}/bidder/{bidderId}/ads?auditStart=1528221114000&id=421`
 
 
 <strong>POST:</strong> submits a single ad. The body must contain a only an Ad object (and its children). Returns a collection of ads containing the ad submitted, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions").</td>
@@ -330,8 +304,8 @@ A collection of ads is an object containing one or more ads with additional meta
   </tr>
   <tr>
     <td>nextPage</td>
-    <td>URL</td>
-    <td>A url that is going to point to the next page if the more is true, null otherwise.  See "Pagination" above. E.g. `https://{baseUrl}bidder/{bidderId}/ads?auditStart=1528221114000&timestampId=421`</td>
+    <td>string</td>
+    <td>A URL for the next page of results when "more" is true, null (or not present) otherwise.  See <a href="#pagination">API Pagination</a> above for details. E.g. `https://{baseUrl}/bidder/{bidderId}/ads?auditStart=1528221114000&id=421`</td>
   </tr>
   <tr>
     <td>ads</td>
@@ -609,7 +583,7 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528282813
 {
   "count": 100,
   "more": 1,
-  "nextPage": "https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000&timestampId=557398",
+  "nextPage": "https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000&id=557398",
   "ads": [
     {
       "id": "557391",
@@ -815,7 +789,21 @@ Response:
 }
 ```
 
-# Appendix C: Resources <a name="appendixc_resources"></a>
+## Appendix C: API Pagination <a name="pagination"></a>
+
+When it comes to implementing pagination, there are subtleties that implementers must consider to ensure correct implementation, otherwise an infinite loop or missing ads could occur.
+
+In order to address this, Ad Management API uses a timestamp + ID pattern similar to that [described here]([https://phauer.com/2018/web-api-pagination-timestamp-id-continuation-token/]). 
+
+The following needs to be covered:
+* The collection of ads returned for each page does not contain records repeated from the prior page (unless the timestamp for last modification has changed since the last request)
+* No ads are skipped even if there is an identical timestamp for multiple ads.
+* Ads returned in a [collection of ads](#collectionofads) must be sorted by the "lastmod" timestamp ascending and the "id" ascending, in that order.
+* When only "auditStart" is specified for the request, any ads with a "lastmod" **greater than** the specified timestamp will be returned (up to the maximum of number of ads an exchange is willing to return per page).
+* When "auditStart" and "id" are both specified for the request, any ads with a) "lastmod" **equal to** the specified timestamp and "id" **greater than** the specified ID or b) "lastmod" **greater than** the specified timestamp will be returned (up to the exchange's maximum per page). 
+
+
+# Appendix D: Resources <a name="appendixd_resources"></a>
 
 Interactive Advertising Bureau Technology Laboratory (IAB Tech Lab)  
 [www.iabtechlab.com](https://www.iabtechlab.com)
