@@ -250,8 +250,8 @@ An "auditStart" filter, at a minimum, must be set on the query string to constra
 
 The available filters are: <br />
 
-**auditStart:** Beginning timestamp for the "lastmod" value from the Audit object of returned ads. (Required). <br />
-**paginationId:** Needed for correct pagination when fetching subsequent pages; beginning ad ID for returned ads. See <a href="#pagination">Appendix C: API Pagination</a> for more details. (Optional)<br />
+**auditStart:** Timestamp, based on "lastmod" value from the Audit object of returned ads, used as the starting point for pagination. See <a href="#pagination">Appendix C: API Pagination</a> for more details. (Required). <br />
+**paginationId:** Needed for correct pagination when fetching subsequent pages; an ad ID for returned ads used as the starting point for pagination. See <a href="#pagination">Appendix C: API Pagination</a> for more details. (Optional)<br />
 **auditEnd:** Ending timestamp for the "lastmod" value from the Audit object of returned ads (timestamp less than or equal to this value). (Optional, now is assumed if omitted) <br />
 
 See <a href="#apiconventions">API conventions</a> regarding date format and <a href="#pagination">Appendix D: Pagination</a> for details about correctly implementing pagination and using the "auditStart" and "id" fields. <br />
@@ -305,7 +305,7 @@ A collection of ads is an object containing one or more ads with additional meta
   <tr>
     <td>nextPage</td>
     <td>string</td>
-    <td>A URL for the next page of results when "more" is true, null (or not present) otherwise.  See <a href="#pagination">API Pagination</a> above for details. E.g. `https://{baseUrl}/bidder/{bidderId}/ads?auditStart=1528221114000&id=421`</td>
+    <td>A URL for the next page of results when "more" is true, null (or not present) otherwise.  See <a href="#pagination">API Pagination</a> above for details. E.g. `https://{baseUrl}/bidder/{bidderId}/ads?auditStart=1528221114000&paginationId=421`</td>
   </tr>
   <tr>
     <td>ads</td>
