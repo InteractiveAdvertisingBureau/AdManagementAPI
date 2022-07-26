@@ -251,14 +251,14 @@ An "auditStart" filter, at a minimum, must be set on the query string to constra
 The available filters are: <br />
 
 **auditStart:** Beginning timestamp for the "lastmod" value from the Audit object of returned ads. (Required). <br />
-**id:** Needed for correct pagination when fetching subsequent pages. See <a href="#pagination">Appendix D: API Pagination</a> for more details. (Optional)<br />
+**paginationId:** Needed for correct pagination when fetching subsequent pages; beginning ad ID for returned ads. See <a href="#pagination">Appendix C: API Pagination</a> for more details. (Optional)<br />
 **auditEnd:** Ending timestamp for the "lastmod" value from the Audit object of returned ads (timestamp less than or equal to this value). (Optional, now is assumed if omitted) <br />
 
 See <a href="#apiconventions">API conventions</a> regarding date format and <a href="#pagination">Appendix D: Pagination</a> for details about correctly implementing pagination and using the "auditStart" and "id" fields. <br />
 
 Example:  <br />
 
-`{baseUrl}/bidder/{bidderId}/ads?auditStart=1528221114000&id=421`
+`{baseUrl}/bidder/{bidderId}/ads?auditStart=1528221114000&paginationId=421`
 
 
 <strong>POST:</strong> submits a single ad. The body must contain a only an Ad object (and its children). Returns a collection of ads containing the ad submitted, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions").</td>
@@ -583,7 +583,7 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528282813
 {
   "count": 100,
   "more": 1,
-  "nextPage": "https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000&id=557398",
+  "nextPage": "https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000&paginationId=557398",
   "ads": [
     {
       "id": "557391",
@@ -793,14 +793,15 @@ Response:
 
 When it comes to implementing pagination, there are subtleties that implementers must consider to ensure correct implementation, otherwise an infinite loop or missing ads could occur.
 
-In order to address this, Ad Management API uses a timestamp + ID pattern similar to that [described here]([https://phauer.com/2018/web-api-pagination-timestamp-id-continuation-token/]). 
+In order to address this, Ad Management API uses a timestamp + ID pattern similar to that [described here]([https://phauer.com/2018/web-api-pagination-timestamp-id-continuation-token/]). The beginning timestamp for ads returned in the collection of ads is given by the "auditStart" query parameter. This timestamp is based on "lastmod" from the Audit object of the ads. The "paginationId" query parameter is the beginning ID for ads returned, and is used for fetching subsequent pages.
 
-The following needs to be covered:
+The following needs to be covered to ensure correct implementation:
 * The collection of ads returned for each page does not contain records repeated from the prior page (unless the timestamp for last modification has changed since the last request)
 * No ads are skipped even if there is an identical timestamp for multiple ads.
-* Ads returned in a [collection of ads](#collectionofads) must be sorted by the "lastmod" timestamp ascending and the "id" ascending, in that order.
-* When only "auditStart" is specified for the request, any ads with a "lastmod" **greater than** the specified timestamp will be returned (up to the maximum of number of ads an exchange is willing to return per page).
-* When "auditStart" and "id" are both specified for the request, any ads with a) "lastmod" **equal to** the specified timestamp and "id" **greater than** the specified ID or b) "lastmod" **greater than** the specified timestamp will be returned (up to the exchange's maximum per page). 
+* Ads returned in a [collection of ads](#collectionofads) must be sorted by the "lastmod" timestamp ascending and the "paginationId" ascending, in that order.
+* * While examples here use numeric values for "paginationId", this is not required. For example, in a given integration between a DSP and exchange, the DSP's ad IDs might be used, and these might be alphanumeric strings.  All that is essential is that sort is consistent.   
+* When **only** "auditStart" is specified for the request, any ads with a "lastmod" **greater than** the specified timestamp will be returned (up to the maximum of number of ads an exchange is willing to return per page).
+* When "auditStart" and "paginationId" are **both** specified for the request, any ads with a) "lastmod" **equal to** the specified timestamp and "paginationId" **greater than** the specified ID or b) "lastmod" **greater than** the specified timestamp will be returned (up to the exchange's maximum per page). 
 
 
 # Appendix D: Resources <a name="appendixd_resources"></a>
