@@ -795,7 +795,7 @@ Response:
 
 When it comes to implementing pagination, there are subtleties that implementers must consider to ensure correct implementation, otherwise an infinite loop or missing ads could occur.
 
-In order to address this, Ad Management API uses a timestamp + ID pattern similar to that [described here]([https://phauer.com/2018/web-api-pagination-timestamp-id-continuation-token/]). The beginning timestamp for ads returned in the collection of ads is given by the "auditStart" query parameter. This timestamp is based on "lastmod" from the Audit object of the ads. The "paginationId" query parameter is the beginning ID for ads returned, and is used for fetching subsequent pages.
+In order to address this, Ad Management API uses a timestamp + ID pattern similar to that [described here](https://phauer.com/2018/web-api-pagination-timestamp-id-continuation-token/). The beginning timestamp for ads returned in the collection of ads is given by the "auditStart" query parameter. This timestamp is based on "lastmod" from the Audit object of the ads. The "paginationId" query parameter is the beginning ID for ads returned, and is used for fetching subsequent pages.
 
 The following needs to be covered to ensure correct implementation:
 * The collection of ads returned for each page does not contain records repeated from the prior page (unless the timestamp for last modification has changed since the last request)
