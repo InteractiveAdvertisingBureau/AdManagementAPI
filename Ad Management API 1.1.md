@@ -575,7 +575,7 @@ POST `{hookurl}`
 
 ### Bidder Polls For Updates <a name="bidderpollsforupdates1"></a>
 
-The bidder is requesting all ads whose status has changed since the most recent audit status change observed on last poll (for this example, timestamp 1528282813000). In this example, there are more ads that have changed than the maximum the exchange will return in a single call.
+The bidder is requesting all ads whose status has changed since the most recent audit status change observed on last poll (for this example, timestamp 1528282813000). In this example, there are more ads that have changed than the maximum the exchange will return in a single call. The bidder follows the URL provided in "nextPage" to get the next page of results.
 
 GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528282813000`
 
@@ -615,7 +615,7 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528282813
 }
 ```
 
-GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000`
+GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000&paginationId=557398`
 
 ```json
 {
@@ -642,6 +642,8 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991
   ]
 }
 ```
+
+As this is the last page of results, "nextPage" is not included by the exchange and "more" is 0.
 
 ## Typical Implementation <a name="typicalimplementation"></a>
 
