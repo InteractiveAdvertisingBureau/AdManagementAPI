@@ -1,48 +1,56 @@
 ![IAB Tech Lab](https://drive.google.com/uc?id=10yoBoG5uRETSXRrnJPUDuONujvADrSG1)
 
-# OpenRTB Ad Management API v1.0 Final Specification
+# OpenRTB Ad Management API v1.1 Specification
 
 **OpenRTB 3.0 and AdCOM Companion Specification**
 
-**FINAL**
-
-November 15, 2018
+January 23, 2023
 
 
 **Executive Summary**
 
-The new IAB Tech Lab Ad Management API specification is part of the [OpenMedia specification suite](iabtechlab.com/openmedia). 
+The IAB Tech Lab Ad Management API specification is part of the [OpenMedia specification suite](iabtechlab.com/openmedia). 
 
 Ad management occurs when a buyer (or a representative party) submits creatives for creative approval, supply platforms approve or disapprove of those creatives, and buyers receive feedback accordingly. Before the publication of this technical standard, supply platforms have relied on proprietary methods and tools for ad management, or none at all. 
 
 This process is important for a few reasons: to ensure creatives comply with content guidelines, are malware-free, and function correctly. Creative submission is also a technical necessity for certain emerging formats such as digital out-of-home (DOOH) and programmatic TV. In an ad quality review process, analysts or automated processes check the ad's landing page, tracking tags, text, the creative itself, and more. The exact nature of the review process is up to each supply platform. The results of these checks are made available for buying platforms to consume and modify bidding behavior accordingly.
 
-The OpenRTB Working Group has identified a need to standardize the creative submission and ad management process to reduce pain points for buyers and sellers in the digital advertising industry. Using a standard approach allows for ease of integration between buy-side and supply-side platforms. Supply platforms using the standardized Ad Management API gain increased control over the creatives that serve on their platforms. Both supply platforms and demand platforms benefit from increased bidding efficiency, as demand platforms can avoid invalid bids and notify customers of defects with their ads. This can unblock revenue that would otherwise be received if buyers knew that they must make adjustments. Submission of ads in advance also benefits all parties as it reduces approval delays that may exist with current workflows. 
+The Programmatic Supply Chain Working Group has identified a need to standardize the creative submission and ad management process to reduce pain points for buyers and sellers in the digital advertising industry. Using a standard approach allows for ease of integration between buy-side and supply-side platforms. Supply platforms using the standardized Ad Management API gain increased control over the creatives that serve on their platforms. Both supply platforms and demand platforms benefit from increased bidding efficiency, as demand platforms can avoid invalid bids and notify customers of defects with their ads. This can unblock revenue that would otherwise be received if buyers knew that they must make adjustments. Submission of ads in advance also benefits all parties as it reduces approval delays that may exist with current workflows. 
 
 The Ad Management API specification support all major scenarios known at time of publication for both bidding and markup delivery. For bidding, this refers to whether supply platforms permit ads to serve by default ("permissive bidding") or require explicit approval before serving ("restrictive bidding"). For markup delivery, this refers to whether the markup is included in each bid or whether bids refer to pre-uploaded markup by ID.
 
 **About IAB Tech Lab**
 
-The IAB Technology Laboratory is a nonprofit research and development consortium charged with producing and helping companies implement global industry technical standards and solutions. The goal of the Tech Lab is to reduce friction associated with the digital advertising and marketing supply chain while contributing to the safe growth of an industry.
+The IAB Technology Laboratory is a nonprofit research and development consortium charged with producing and helping companies implement global industry technical standards and solutions. The goal of the Tech Lab is to reduce friction associated with the digital advertising and marketing supply chain while contributing to the safe growth of an industry. The IAB Tech Lab spearheads the development of technical standards, creates and maintains a code library to assist in rapid, cost-effective implementation of IAB standards, and establishes a test platform for companies to evaluate the compatibility of their technology solutions with IAB standards, which for 18 years have been the foundation for interoperability and profitable growth in the digital advertising supply chain.
 
-The IAB Tech Lab spearheads the development of technical standards, creates and maintains a code library to assist in rapid, cost-effective implementation of IAB standards, and establishes a test platform for companies to evaluate the compatibility of their technology solutions with IAB standards, which for 18 years have been the foundation for interoperability and profitable growth in the digital advertising supply chain.
+Learn more about IAB Tech Lab here: https://www.iabtechlab.com/
 
 **Original Author of the Ad Management API Specification Proposal**
 
-Ian Trider, Director, RTB Platform Operations, Centro and IAB Tech Lab Commit Group Member
+Ian Trider, VP, RTB Platform Operations, Basis and IAB Tech Lab Commit Group Member
 
-**IAB Tech Lab OpenRTB Commit Group Members**
+**IAB Tech Lab Programmatic Supply Chain Commit Group Members**
+[https://iabtechlab.com/working-groups/programmatic-supply-chain-commit-group/](https://iabtechlab.com/working-groups/programmatic-supply-chain-commit-group/)
 
-Ian Trider, Centro; Curt Larson, Sharethrough; Jim Butler, AOL; Haskell Garon, Google; Neal Richter, Rakuten Marketing; Allen Dove, SpotX; Pierre Nicolas, Criteo; Bill Simmons, DataXu
+**IAB Tech Lab Programmatic Supply Chain Working Group Members**
 
-**IAB Tech Lab OpenRTB Working Group Members**
-
-[https://iabtechlab.com/working-groups/openrtb-working-group/](https://iabtechlab.com/working-groups/openrtb-working-group/) 
+[https://iabtechlab.com/working-groups/programmatic-supply-chain-working-group/](https://iabtechlab.com/working-groups/programmatic-supply-chain-working-group/) 
 
 **IAB Tech Lab Contact**
 
-Jennifer Derke, Director of Product, Programmatic & Data, IAB Tech Lab
-[openrtb@iabtechlab.com](mailto:openrtb@iabtechlab.com)
+For more information, or to get involved, please email support@iabtechlab.com.
+
+**Contributors and Technical Governance**
+
+Programmatic Supply Chain Working Group members provide contributions to this repository. Participants in the Programmatic Supply Working group must be members of IAB Tech Lab. Technical Governance and code commits for the project are provided by the IAB Tech Lab Programmatic Supply Chain Commit Group.
+
+Learn more about how to submit changes in our working group: [So, You'd Like to Propose a Change...](https://iabtechlab.com/blog/so-youd-like-to-propose-a-change-to-openrtb-adcom/)
+
+**License**
+OpenRTB Specification the IAB Tech Lab is licensed under a Creative Commons Attribution 3.0 License. To view a copy of this license, visit creativecommons.org/licenses/by/3.0/ or write to Creative Commons, 171 Second Street, Suite 300, San Francisco, CA 94105, USA.
+
+**Disclaimer**
+THE STANDARDS, THE SPECIFICATIONS, THE MEASUREMENT GUIDELINES, AND ANY OTHER MATERIALS OR SERVICES PROVIDED TO OR USED BY YOU HEREUNDER (THE “PRODUCTS AND SERVICES”) ARE PROVIDED “AS IS” AND “AS AVAILABLE,” AND IAB TECHNOLOGY LABORATORY, INC. (“TECH LAB”) MAKES NO WARRANTY WITH RESPECT TO THE SAME AND HEREBY DISCLAIMS ANY AND ALL EXPRESS, IMPLIED, OR STATUTORY WARRANTIES, INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AVAILABILITY, ERROR-FREE OR UNINTERRUPTED OPERATION, AND ANY WARRANTIES ARISING FROM A COURSE OF DEALING, COURSE OF PERFORMANCE, OR USAGE OF TRADE. TO THE EXTENT THAT TECH LAB MAY NOT AS A MATTER OF APPLICABLE LAW DISCLAIM ANY IMPLIED WARRANTY, THE SCOPE AND DURATION OF SUCH WARRANTY WILL BE THE MINIMUM PERMITTED UNDER SUCH LAW. THE PRODUCTS AND SERVICES DO NOT CONSTITUTE BUSINESS OR LEGAL ADVICE. TECH LAB DOES NOT WARRANT THAT THE PRODUCTS AND SERVICES PROVIDED TO OR USED BY YOU HEREUNDER SHALL CAUSE YOU AND/OR YOUR PRODUCTS OR SERVICES TO BE IN COMPLIANCE WITH ANY APPLICABLE LAWS, REGULATIONS, OR SELF-REGULATORY FRAMEWORKS, AND YOU ARE SOLELY RESPONSIBLE FOR COMPLIANCE WITH THE SAME, INCLUDING, BUT NOT LIMITED TO, DATA PROTECTION LAWS, SUCH AS THE PERSONAL INFORMATION PROTECTION AND ELECTRONIC DOCUMENTS ACT (CANADA), THE DATA PROTECTION DIRECTIVE (EU), THE E-PRIVACY DIRECTIVE (EU), THE GENERAL DATA PROTECTION REGULATION (EU), AND THE E-PRIVACY REGULATION (EU) AS AND WHEN THEY BECOME EFFECTIVE.
 
 # Table of Contents
 
@@ -87,7 +95,11 @@ Jennifer Derke, Director of Product, Programmatic & Data, IAB Tech Lab
     - [Bidder Ad Submission](#bidderadsubmission2)
     - [Bidder Polls For Updates](#bidderpollsforupdates2)
     - [Bidder Re-activates an Ad](#bidderreactivates)
-- [Appendix C: Resources](#appendixc_resources)
+- [Appendix C: API Pagination](#pagination)
+- [Appendix D: Resources](#appendixd_resources)
+- [Appendix E: Change Log](#appendixe_changelog)
+- [Appendix F: Errata](#appendixf_errata)
+
 
 
 # Introduction and Background <a name="intro"></a>
@@ -229,7 +241,7 @@ All dates/times must be specified in the format of millis since Unix epoch (Janu
 
 # Endpoints <a name="endpoints"></a>
 
-Bidders will interact with the Ad Management API by making HTTP calls to specific endpoints. Exchanges will specify a **base URL** (denoted using the {baseUrl} placeholder in this document) and a **bidder ID** representing a given bidder/demand partner (denoted using the {bidderId} placeholder in this document). All endpoints are relative to this base URL. The base URL must include the major version of the specification implemented in the form of "v#". For example, an exchange implementing version 1.0 of this API may define its base URL as `https://api.exchange.com/management/v1`. For example, assuming a bidder ID of 492 the ads endpoint will be reached at `https://api.exchange.com/management/v1/bidder/492/ads`.
+Bidders will interact with the Ad Management API by making HTTP calls to specific endpoints. Exchanges will specify a **base URL** (denoted using the {baseUrl} placeholder in this document) and a **bidder ID** representing a given bidder/demand partner (denoted using the {bidderId} placeholder in this document). All endpoints are relative to this base URL. The base URL must include the major version of the specification implemented in the form of "v#". For example, an exchange implementing version 1.1 of this API may define its base URL as `https://api.exchange.com/management/v1`. For example, assuming a bidder ID of 492 the ads endpoint will be reached at `https://api.exchange.com/management/v1/bidder/492/ads`.
 
 Per "API Conventions" above, breaking changes require the major version number to be iterated, and partners must deal gracefully with unexpected fields, so the minor version number is not required in the URL and its omission provide ease of upgrade. 
 
@@ -244,18 +256,19 @@ Per "API Conventions" above, breaking changes require the major version number t
     <td>GET, POST</td>
     <td><strong>GET:</strong> returns a collection of ads for a given bidder. This response may be sparse at the exchange's discretion (see "API conventions"). <br />
 
-An "auditStart" filter, at a minimum, must be set on the query string to constrain the number of ads returned, else exchanges may choose to return a 400 status code. Exchanges may limit the number of ads in the returned collection at their discretion. If the result set is a subset of available ads, this will be indicated in the result (see "Collection of ads"). Bidders may fetch the remaining ads by examining the last modification date of the Audit object of the final ad in the collection (the most recently updated ad) and use this as the "auditStart" filter for a subsequent request, repeating until the bidder has gathered all updates. <br />
+An "auditStart" filter, at a minimum, must be set on the query string to constrain the number of ads returned, else exchanges may choose to return a 400 status code. Exchanges may limit the number of ads in the returned collection at their discretion. If the result set is a subset of available ads, this will be indicated in the result (see "Collection of ads"). Bidders may fetch the remaining ads by calling the URL included in the "nextPage" field, repeating until the bidder has gathered all updates. <br />
 
 The available filters are: <br />
 
-**auditStart:** Beginning timestamp for the "lastmod" value from the Audit object of returned ads (timestamp greater than this value). (Required) <br />
+**auditStart:** Timestamp, based on "lastmod" value from the Audit object of returned ads, used as the starting point for pagination. See <a href="#pagination">Appendix C: API Pagination</a> for more details. (Required). <br />
+**paginationId:** Needed for correct pagination when fetching subsequent pages; an ad ID for returned ads used as the starting point for pagination. See <a href="#pagination">Appendix C: API Pagination</a> for more details. (Optional)<br />
 **auditEnd:** Ending timestamp for the "lastmod" value from the Audit object of returned ads (timestamp less than or equal to this value). (Optional, now is assumed if omitted) <br />
 
-See "API conventions" regarding date format. <br />
+See <a href="#apiconventions">API conventions</a> regarding date format and <a href="#pagination">Appendix D: Pagination</a> for details about correctly implementing pagination and using the "auditStart" and "id" fields. <br />
 
-For example:  <br />
+Example:  <br />
 
-`/ads?auditStart=1528221114000`
+`{baseUrl}/bidder/{bidderId}/ads?auditStart=1528221114000&paginationId=421`
 
 
 <strong>POST:</strong> submits a single ad. The body must contain a only an Ad object (and its children). Returns a collection of ads containing the ad submitted, including any fields or child objects provided by the exchange. This response may be sparse at the exchange's discretion (see "API conventions").</td>
@@ -298,6 +311,11 @@ A collection of ads is an object containing one or more ads with additional meta
     <td>more</td>
     <td>integer</td>
     <td>A boolean flag indicating that this collection is a subset; the number of ads returned has been limited by exchange policy. See "Endpoints" above. May be omitted when not needed.</td>
+  </tr>
+  <tr>
+    <td>nextPage</td>
+    <td>string</td>
+    <td>A URL for the next page of results when "more" is true, null (or not present) otherwise.  See <a href="#pagination">API Pagination</a> above for details. E.g. `https://{baseUrl}/bidder/{bidderId}/ads?auditStart=1528221114000&paginationId=421`</td>
   </tr>
   <tr>
     <td>ads</td>
@@ -473,7 +491,7 @@ To facilitate integration, exchanges should provide a document similar to the be
   </tr>
   <tr>
     <th>Version Used</th>
-    <td>v1.0</td>
+    <td>v1.1</td>
   </tr>
   <tr>
     <th>Rate Limit</th>
@@ -567,7 +585,7 @@ POST `{hookurl}`
 
 ### Bidder Polls For Updates <a name="bidderpollsforupdates1"></a>
 
-The bidder is requesting all ads whose status has changed since the most recent audit status change observed on last poll (for this example, timestamp 1528282813000). In this example, there are more ads that have changed than the maximum the exchange will return in a single call.
+The bidder is requesting all ads whose status has changed since the most recent audit status change observed on last poll (for this example, timestamp 1528282813000). In this example, there are more ads that have changed than the maximum the exchange will return in a single call. The bidder follows the URL provided in "nextPage" to get the next page of results.
 
 GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528282813000`
 
@@ -575,6 +593,7 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528282813
 {
   "count": 100,
   "more": 1,
+  "nextPage": "https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000&paginationId=557398",
   "ads": [
     {
       "id": "557391",
@@ -606,7 +625,7 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528282813
 }
 ```
 
-GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000`
+GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991000&paginationId=557398`
 
 ```json
 {
@@ -634,6 +653,8 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991
 }
 ```
 
+As this is the last page of results, "nextPage" is not included by the exchange and "more" is 0.
+
 ## Typical Implementation <a name="typicalimplementation"></a>
 
 <table>
@@ -651,7 +672,7 @@ GET `https://api.superads.com/management/v1/bidder/496/ads?auditStart=1528306991
   </tr>
   <tr>
     <th>Version Used</th>
-    <td>v1.0</td>
+    <td>v1.1</td>
   </tr>
   <tr>
     <th>Rate Limit</th>
@@ -780,7 +801,22 @@ Response:
 }
 ```
 
-# Appendix C: Resources <a name="appendixc_resources"></a>
+# Appendix C: API Pagination <a name="pagination"></a>
+
+When it comes to implementing pagination, there are subtleties that implementers must consider to ensure correct implementation, otherwise an infinite loop or missing ads could occur.
+
+In order to address this, Ad Management API uses a timestamp + ID pattern similar to that [described here](https://phauer.com/2018/web-api-pagination-timestamp-id-continuation-token/). The beginning timestamp for ads returned in the collection of ads is given by the "auditStart" query parameter. This timestamp is based on "lastmod" from the Audit object of the ads. The "paginationId" query parameter is the beginning ID for ads returned, and is used for fetching subsequent pages.
+
+The following needs to be covered to ensure correct implementation:
+* The collection of ads returned for each page does not contain records repeated from the prior page (unless the timestamp for last modification has changed since the last request)
+* No ads are skipped even if there is an identical timestamp for multiple ads.
+* Ads returned in a [collection of ads](#collectionofads) must be sorted by the "lastmod" timestamp ascending and the "paginationId" ascending, in that order.
+* * While examples here use numeric values for "paginationId", this is not required. For example, in a given integration between a DSP and exchange, the DSP's ad IDs might be used, and these might be alphanumeric strings.  All that is essential is that sort is consistent.   
+* When **only** "auditStart" is specified for the request, any ads with a "lastmod" **greater than** the specified timestamp will be returned (up to the maximum of number of ads an exchange is willing to return per page).
+* When "auditStart" and "paginationId" are **both** specified for the request, any ads with a) "lastmod" **equal to** the specified timestamp and "paginationId" **greater than** the specified ID or b) "lastmod" **greater than** the specified timestamp will be returned (up to the exchange's maximum per page). 
+
+
+# Appendix D: Resources <a name="appendixd_resources"></a>
 
 Interactive Advertising Bureau Technology Laboratory (IAB Tech Lab)  
 [www.iabtechlab.com](https://www.iabtechlab.com)
@@ -793,3 +829,32 @@ AdCOM Project on Github
 
 OpenRTB v3.0 Specification  
 [https://github.com/InteractiveAdvertisingBureau/openrtb](https://github.com/InteractiveAdvertisingBureau/openrtb)
+
+# Appendix E:  Change Log <a name="appendixe_changelog"></a>
+
+This appendix serves as a brief summary of changes to the specification. These changes pertain only to the substance of the specification and not routine document formatting, information organization, or content without technical impact. For that, see [Appendix F: Errata](#appendixf_errata).
+
+<table>
+  <tr>
+    <td><strong>Version</strong></td>
+    <td><strong>Changes</strong></td>
+  </tr>
+  <tr>
+    <td>1.1</td>
+    <td><b>Enhanced pagination:</b> As specified in v1.0, an infinite loop could occur while attempting to paginate through results. This could occur if there were more ads with an identical last modification timestamp than an exchange will return per page. To address this, non-breaking enhancements have been added for a more sophisticated approach to pagination.<br />
+  </tr>
+  <tr>
+    <td>1.0</td>
+    <td><b>Initial release.</b><br />
+  </tr>
+</table>
+
+# Appendix F: Errata <a name="appendixf_errata"></a>
+
+This appendix catalogues any error corrections which have been made to this document after its versioned release. The body of the document has been updated accordingly.
+
+Only minor fixes, such as clarifications or corrections to descriptions, may be treated as errata. Improvements or material changes are summarized in the change log.
+
+Granular details of the changes can be seen by reviewing the commit history of the document.
+
+There are no errata at this time.
