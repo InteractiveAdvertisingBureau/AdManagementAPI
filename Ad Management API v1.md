@@ -27,7 +27,7 @@ Learn more about IAB Tech Lab here: https://www.iabtechlab.com/
 
 **Original Author of the Ad Management API Specification Proposal**
 
-Ian Trider, Director, RTB Platform Operations, Centro and IAB Tech Lab Commit Group Member
+Ian Trider, VP, RTB Platform Operations, Basis and IAB Tech Lab Commit Group Member
 
 **IAB Tech Lab Programmatic Supply Chain Commit Group Members**
 [https://iabtechlab.com/working-groups/programmatic-supply-chain-commit-group/](https://iabtechlab.com/working-groups/programmatic-supply-chain-commit-group/)
