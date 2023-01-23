@@ -17,32 +17,42 @@ Ad management occurs when a buyer (or a representative party) submits creatives 
 
 This process is important for a few reasons: to ensure creatives comply with content guidelines, are malware-free, and function correctly. Creative submission is also a technical necessity for certain emerging formats such as digital out-of-home (DOOH) and programmatic TV. In an ad quality review process, analysts or automated processes check the ad's landing page, tracking tags, text, the creative itself, and more. The exact nature of the review process is up to each supply platform. The results of these checks are made available for buying platforms to consume and modify bidding behavior accordingly.
 
-The OpenRTB Working Group has identified a need to standardize the creative submission and ad management process to reduce pain points for buyers and sellers in the digital advertising industry. Using a standard approach allows for ease of integration between buy-side and supply-side platforms. Supply platforms using the standardized Ad Management API gain increased control over the creatives that serve on their platforms. Both supply platforms and demand platforms benefit from increased bidding efficiency, as demand platforms can avoid invalid bids and notify customers of defects with their ads. This can unblock revenue that would otherwise be received if buyers knew that they must make adjustments. Submission of ads in advance also benefits all parties as it reduces approval delays that may exist with current workflows. 
+The Programmatic Supply Chain Working Group has identified a need to standardize the creative submission and ad management process to reduce pain points for buyers and sellers in the digital advertising industry. Using a standard approach allows for ease of integration between buy-side and supply-side platforms. Supply platforms using the standardized Ad Management API gain increased control over the creatives that serve on their platforms. Both supply platforms and demand platforms benefit from increased bidding efficiency, as demand platforms can avoid invalid bids and notify customers of defects with their ads. This can unblock revenue that would otherwise be received if buyers knew that they must make adjustments. Submission of ads in advance also benefits all parties as it reduces approval delays that may exist with current workflows. 
 
 The Ad Management API specification support all major scenarios known at time of publication for both bidding and markup delivery. For bidding, this refers to whether supply platforms permit ads to serve by default ("permissive bidding") or require explicit approval before serving ("restrictive bidding"). For markup delivery, this refers to whether the markup is included in each bid or whether bids refer to pre-uploaded markup by ID.
 
 **About IAB Tech Lab**
 
-The IAB Technology Laboratory is a nonprofit research and development consortium charged with producing and helping companies implement global industry technical standards and solutions. The goal of the Tech Lab is to reduce friction associated with the digital advertising and marketing supply chain while contributing to the safe growth of an industry.
+The IAB Technology Laboratory is a nonprofit research and development consortium charged with producing and helping companies implement global industry technical standards and solutions. The goal of the Tech Lab is to reduce friction associated with the digital advertising and marketing supply chain while contributing to the safe growth of an industry. The IAB Tech Lab spearheads the development of technical standards, creates and maintains a code library to assist in rapid, cost-effective implementation of IAB standards, and establishes a test platform for companies to evaluate the compatibility of their technology solutions with IAB standards, which for 18 years have been the foundation for interoperability and profitable growth in the digital advertising supply chain.
 
-The IAB Tech Lab spearheads the development of technical standards, creates and maintains a code library to assist in rapid, cost-effective implementation of IAB standards, and establishes a test platform for companies to evaluate the compatibility of their technology solutions with IAB standards, which for 18 years have been the foundation for interoperability and profitable growth in the digital advertising supply chain.
+Learn more about IAB Tech Lab here: https://www.iabtechlab.com/
 
 **Original Author of the Ad Management API Specification Proposal**
 
 Ian Trider, Director, RTB Platform Operations, Centro and IAB Tech Lab Commit Group Member
 
 **IAB Tech Lab OpenRTB Commit Group Members**
-
-Ian Trider, Centro; Curt Larson, Sharethrough; Jim Butler, AOL; Haskell Garon, Google; Neal Richter, Rakuten Marketing; Allen Dove, SpotX; Pierre Nicolas, Criteo; Bill Simmons, DataXu
+[https://iabtechlab.com/working-groups/openrtb-working-group/](https://iabtechlab.com/working-groups/programmatic-supply-chain-commit-group/)
 
 **IAB Tech Lab OpenRTB Working Group Members**
 
-[https://iabtechlab.com/working-groups/openrtb-working-group/](https://iabtechlab.com/working-groups/openrtb-working-group/) 
+[https://iabtechlab.com/working-groups/programmatic-supply-chain-working-group/](https://iabtechlab.com/working-groups/programmatic-supply-chain-working-group/) 
 
 **IAB Tech Lab Contact**
 
-Jennifer Derke, Director of Product, Programmatic & Data, IAB Tech Lab
-[openrtb@iabtechlab.com](mailto:openrtb@iabtechlab.com)
+For more information, or to get involved, please email support@iabtechlab.com.
+
+**Contributors and Technical Governance**
+
+OpenRTB Working Group members provide contributions to this repository. Participants in the Programmatic Supply Working group must be members of IAB Tech Lab. Technical Governance and code commits for the project are provided by the IAB Tech Lab Programmatic Supply Chain Commit Group.
+
+Learn more about how to submit changes in our working group: [So, You'd Like to Propose a Change...](https://iabtechlab.com/blog/so-youd-like-to-propose-a-change-to-openrtb-adcom/)
+
+**License**
+OpenRTB Specification the IAB Tech Lab is licensed under a Creative Commons Attribution 3.0 License. To view a copy of this license, visit creativecommons.org/licenses/by/3.0/ or write to Creative Commons, 171 Second Street, Suite 300, San Francisco, CA 94105, USA.
+
+**Disclaimer**
+THE STANDARDS, THE SPECIFICATIONS, THE MEASUREMENT GUIDELINES, AND ANY OTHER MATERIALS OR SERVICES PROVIDED TO OR USED BY YOU HEREUNDER (THE “PRODUCTS AND SERVICES”) ARE PROVIDED “AS IS” AND “AS AVAILABLE,” AND IAB TECHNOLOGY LABORATORY, INC. (“TECH LAB”) MAKES NO WARRANTY WITH RESPECT TO THE SAME AND HEREBY DISCLAIMS ANY AND ALL EXPRESS, IMPLIED, OR STATUTORY WARRANTIES, INCLUDING, WITHOUT LIMITATION, ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AVAILABILITY, ERROR-FREE OR UNINTERRUPTED OPERATION, AND ANY WARRANTIES ARISING FROM A COURSE OF DEALING, COURSE OF PERFORMANCE, OR USAGE OF TRADE. TO THE EXTENT THAT TECH LAB MAY NOT AS A MATTER OF APPLICABLE LAW DISCLAIM ANY IMPLIED WARRANTY, THE SCOPE AND DURATION OF SUCH WARRANTY WILL BE THE MINIMUM PERMITTED UNDER SUCH LAW. THE PRODUCTS AND SERVICES DO NOT CONSTITUTE BUSINESS OR LEGAL ADVICE. TECH LAB DOES NOT WARRANT THAT THE PRODUCTS AND SERVICES PROVIDED TO OR USED BY YOU HEREUNDER SHALL CAUSE YOU AND/OR YOUR PRODUCTS OR SERVICES TO BE IN COMPLIANCE WITH ANY APPLICABLE LAWS, REGULATIONS, OR SELF-REGULATORY FRAMEWORKS, AND YOU ARE SOLELY RESPONSIBLE FOR COMPLIANCE WITH THE SAME, INCLUDING, BUT NOT LIMITED TO, DATA PROTECTION LAWS, SUCH AS THE PERSONAL INFORMATION PROTECTION AND ELECTRONIC DOCUMENTS ACT (CANADA), THE DATA PROTECTION DIRECTIVE (EU), THE E-PRIVACY DIRECTIVE (EU), THE GENERAL DATA PROTECTION REGULATION (EU), AND THE E-PRIVACY REGULATION (EU) AS AND WHEN THEY BECOME EFFECTIVE.
 
 # Table of Contents
 
