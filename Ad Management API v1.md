@@ -31,10 +31,10 @@ Learn more about IAB Tech Lab here: https://www.iabtechlab.com/
 
 Ian Trider, Director, RTB Platform Operations, Centro and IAB Tech Lab Commit Group Member
 
-**IAB Tech Lab OpenRTB Commit Group Members**
-[https://iabtechlab.com/working-groups/openrtb-working-group/](https://iabtechlab.com/working-groups/programmatic-supply-chain-commit-group/)
+**IAB Tech Lab Programmatic Supply Chain Commit Group Members**
+[https://iabtechlab.com/working-groups/programmatic-supply-chain-commit-group/](https://iabtechlab.com/working-groups/programmatic-supply-chain-commit-group/)
 
-**IAB Tech Lab OpenRTB Working Group Members**
+**IAB Tech Lab Programmatic Supply Chain Working Group Members**
 
 [https://iabtechlab.com/working-groups/programmatic-supply-chain-working-group/](https://iabtechlab.com/working-groups/programmatic-supply-chain-working-group/) 
 
@@ -44,7 +44,7 @@ For more information, or to get involved, please email support@iabtechlab.com.
 
 **Contributors and Technical Governance**
 
-OpenRTB Working Group members provide contributions to this repository. Participants in the Programmatic Supply Working group must be members of IAB Tech Lab. Technical Governance and code commits for the project are provided by the IAB Tech Lab Programmatic Supply Chain Commit Group.
+Programmatic Supply Chain Working Group members provide contributions to this repository. Participants in the Programmatic Supply Working group must be members of IAB Tech Lab. Technical Governance and code commits for the project are provided by the IAB Tech Lab Programmatic Supply Chain Commit Group.
 
 Learn more about how to submit changes in our working group: [So, You'd Like to Propose a Change...](https://iabtechlab.com/blog/so-youd-like-to-propose-a-change-to-openrtb-adcom/)
 
@@ -99,6 +99,8 @@ THE STANDARDS, THE SPECIFICATIONS, THE MEASUREMENT GUIDELINES, AND ANY OTHER MAT
     - [Bidder Re-activates an Ad](#bidderreactivates)
 - [Appendix C: API Pagination](#pagination)
 - [Appendix D: Resources](#appendixd_resources)
+- [Appendix E: Change Log](#appendixe_changelog)
+- [Appendix F: Errata](#appendixf_errata)
 
 
 
@@ -829,3 +831,32 @@ AdCOM Project on Github
 
 OpenRTB v3.0 Specification  
 [https://github.com/InteractiveAdvertisingBureau/openrtb](https://github.com/InteractiveAdvertisingBureau/openrtb)
+
+# Appendix E:  Change Log <a name="appendixe_changelog"></a>
+
+This appendix serves as a brief summary of changes to the specification. These changes pertain only to the substance of the specification and not routine document formatting, information organization, or content without technical impact. For that, see [Appendix F: Errata](#appendixf_errata).
+
+<table>
+  <tr>
+    <td><strong>Version</strong></td>
+    <td><strong>Changes</strong></td>
+  </tr>
+  <tr>
+    <td>1.1</td>
+    <td><b>Enhanced pagination:</b> As specified in v1.0, an infinite loop could occur while attempting to paginate through results. This could occur if there were more ads with an identical last modification timestamp than an exchange will return per page. To address this, non-breaking enhancements have been added for a more sophisticated approach to pagination.<br />
+  </tr>
+  <tr>
+    <td>1.0</td>
+    <td><b>Initial release.</b><br />
+  </tr>
+</table>
+
+# Appendix F: Errata <a name="appendixf_errata"></a>
+
+This appendix catalogues any error corrections which have been made to this document after its versioned release. The body of the document has been updated accordingly.
+
+Only minor fixes, such as clarifications or corrections to descriptions, may be treated as errata. Improvements or material changes are summarized in the change log.
+
+Granular details of the changes can be seen by reviewing the commit history of the document.
+
+There are no errata at this time.
