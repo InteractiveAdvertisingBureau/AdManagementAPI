@@ -4,9 +4,7 @@
 
 **OpenRTB 3.0 and AdCOM Companion Specification**
 
-**FINAL**
-
-July 25, 2022
+January 23, 2023
 
 
 **Executive Summary**
